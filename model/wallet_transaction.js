@@ -17,6 +17,12 @@ const walletTransactionSchema = new mongoose.Schema({
 
     currency: {
         type: String,
+        required: [true, 'currency is required'],
+        enum: ['successful', 'pending', 'failed']
+    },
+
+    status: {
+        type: String,
         required: [true, 'payment status is required'],
         enum: ['successful', 'pending', 'failed']
     }
