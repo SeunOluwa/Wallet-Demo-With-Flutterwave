@@ -26,7 +26,7 @@ app.post('/register', async (req, res) => {
 
         // check if user already exist
         // validate if user already exist in the database
-        const oldUser = User.findOne({ email });
+        const oldUser = await User.findOne({ email });
 
         if (oldUser) {
             return res.status(409).send('User Already Exist. Please Login');
