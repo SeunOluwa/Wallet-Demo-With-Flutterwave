@@ -14,8 +14,8 @@
 
     <script>
         function makePayment() {
-            FlutterwaveCheckOut({
-                public_key: 'PUBLIC_KEY_HERE',
+            FlutterwaveCheckout({
+                public_key: 'FLWPUBK_TEST-5b929238ebf9e5bb4f9bd49dc9254f3d-X',
                 tx_ref: 'hooli-tx-1920bbtyt',
                 amount: 1000,
                 currency: 'NGN',
@@ -30,8 +30,19 @@
                     email: 'taiwoluwaseun8@gmail.com',
                     phone_number: '07016755688',
                     name: 'Oluwaseun Taiwo'
+                },
+                callback: function(data) {
+                    console.log(data);
+                },
+                onclose: function() {
+                    // close modal
+                },
+                customizations: {
+                    title: 'Flutterwave Demo',
+                    description: 'Flutterwave Payment Demo',
+                    logo: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/payment-2193968-1855546.png'
                 }
-            })
+            });
         }
     </script>
 
