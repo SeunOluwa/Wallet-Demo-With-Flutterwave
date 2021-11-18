@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const User = require('../model/User');
+const Transaction = require('../model/Transaction');
 
 const walletController = require('../controllers/walletController');
 const walletTransactionController = require('../controllers/walletTransactionController');
@@ -40,6 +41,13 @@ const response = async (req, res) => {
     await transactionController.createTransaction(user._id, id, status, currency, amount, customer);
 
     await walletController.updateWallet(user._id, amount);
+
+    // check if transaction id already exist
+    const transactionExist = await Transaction.findOne({ transactionId: id });
+
+    if (transactionExist) {
+        return res.status(409).send('Transaction Already Exist');
+    }
 
     return res.status(200).json({
         response: 'wallet funded successfully',
