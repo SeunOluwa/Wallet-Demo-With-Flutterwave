@@ -5,6 +5,7 @@ const path = require('path');
 
 const userRoutes = require('./routes/userRoutes');
 const responseRoutes = require('./routes/responseRoutes');
+const balanceRoutes = require('./routes/balanceRoutes');
 
 const app = express();
 
@@ -18,5 +19,6 @@ app.get('/pay', (req, res) => {
 });
 
 app.use('/', responseRoutes);
+app.use('/', balanceRoutes);
 
 module.exports = app;
