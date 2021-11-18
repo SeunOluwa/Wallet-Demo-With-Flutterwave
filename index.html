@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receive Payment</title>
+</head>
+<body>
+    
+    <form>
+        <script src="https://checkout.flutterwave.com/v3.js"></script>
+        <button type="button" onClick="makePayment()">Pay Now</button>
+    </form>
+
+    <script>
+        function makePayment() {
+            FlutterwaveCheckOut({
+                public_key: 'PUBLIC_KEY_HERE',
+                tx_ref: 'hooli-tx-1920bbtyt',
+                amount: 1000,
+                currency: 'NGN',
+                country: 'NG',
+                payment_options: 'card',
+
+                // specified redirect route
+                redirect_url: 'http://localhost:5000/response',
+
+                // use customer details if user is not logged in, else add user_id to the request
+                customer: {
+                    email: 'taiwoluwaseun8@gmail.com',
+                    phone_number: '07016755688',
+                    name: 'Oluwaseun Taiwo'
+                }
+            })
+        }
+    </script>
+
+</body>
+</html>
