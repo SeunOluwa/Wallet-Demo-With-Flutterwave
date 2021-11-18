@@ -1,5 +1,11 @@
 const axios = require('axios');
 
+const User = require('../model/User');
+
+const walletController = require('../controllers/walletController');
+const walletTransactionController = require('../controllers/walletTransactionController');
+const transactionController = require('../controllers/transactionController');
+
 require('dotenv').config();
 
 const response = async (req, res) => {
@@ -19,7 +25,26 @@ const response = async (req, res) => {
         }
     });
 
-    console.log(response.data.data);
+    const { status, currency, id, amount, customer } = response.data.data;
+
+    // check if customer exist in the database
+    const user = await User.findOne({ email: customer.email });
+
+    // check if user have a wallet else create wallet
+    const wallet = await walletController.validateUserWallet(user._id);
+
+    // create wallet transaction
+    await walletTransactionController.createWalletTransaction(user._id, status, currency, amount);
+
+    // create transaction
+    await transactionController.createTransaction(user._id, id, status, currency, amount, customer);
+
+    await walletController.updateWallet(user._id, amount);
+
+    return res.status(200).json({
+        response: 'wallet funded successfully',
+        data: wallet
+    });
 }
 
 module.exports = {
